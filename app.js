@@ -1,6 +1,8 @@
 // 1. Importar la librería para crear aplicaciones Web
 const express = require('express');
-
+const mongoose = requiere('mongoose');
+//importar modelo del producto
+const producto = requiere (',/models/producto')
 // 2. Crear una instacia de express (aplicación principal)
 const app = express();
 
@@ -14,40 +16,13 @@ app.set('view engine', 'ejs');
 // Establecer la carpeta publica con elementos estáticos
 app.use(express.static('public'));
 
-// Simular una lista de productos
-const listaProductos = [
-    {
-        nombre: "Laptop Pro",
-        precio: 850,
-        categoria: "computadores",
-        imagen: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8"
-    },
-    {
-        nombre: "PC Desktop Gamer",
-        precio: 1200,
-        categoria: "computadores",
-        imagen: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7"
-    },
-    {
-        nombre: "Audifonos Sony",
-        precio: 125,
-        categoria: "perifericos",
-        imagen: "https://images.unsplash.com/photo-1583394838336-acd977736f90"
-    },
-    {
-        nombre: "Mouse ergonómico",
-        precio: 50,
-        categoria: "perifericos",
-        imagen: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7"
-    },
-    {
-        nombre: "Teclado Mecánico",
-        precio: 80,
-        categoria: "perifericos",
-        imagen: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae"
-    }
-];
+//---- CONEXION CON MONGODB----
+mongoose.connect('mongodb://127.0.0.1:27017/tienda')
+    .then (()=> console.log("[OK] Conectado a MongoDB local"))
+    .catch(err => console.log("[FAIL] Error de conexion", err))
 
+//Consultar la lista de productos
+const listaproductos =await producto.find ();
 
 
 // -- RUTAS --
@@ -78,8 +53,3 @@ app.listen(PORT, () =>{
     console.log(`>>> Servidor corriendo en http://localhost:${PORT}`);
     console.log(`>>> Presione Ctrl + c para detener`);
 });
-
-
-
-
-
